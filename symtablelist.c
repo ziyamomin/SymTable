@@ -123,6 +123,7 @@ void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
 
 }
 
+
 void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
