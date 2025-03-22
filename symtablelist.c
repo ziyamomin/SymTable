@@ -55,7 +55,7 @@ int SymTable_put(SymTable_T oSymTable,
      const char *pcKey, const void *pvValue) {
         assert(oSymTable != NULL);
         assert(pcKey != NULL);
-        assert(pcValue != NULL);
+        assert(pvValue != NULL);
 
         if(SymTable_contains(oSymTable, pcKey)) {
             return 0;
@@ -86,7 +86,7 @@ void *SymTable_replace(SymTable_T oSymTable,
      const char *pcKey, const void *pvValue) {
         assert(oSymTable != NULL);
         assert(pcKey != NULL);
-        assert(pcValue != NULL);
+        assert(pvValue != NULL);
 
      }
 
@@ -115,7 +115,7 @@ void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
     currentNode = oSymTable->firstNode;
     while(currentNode != NULL) {
         if(strcmp(currentNode->pcKey, pcKey) == 0) {
-            return currentNode->pvValue;
+            return currentNode->pcValue;
         }
         currentNode;
     }
@@ -137,8 +137,8 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
     currentNode = oSymTable->firstNode;
 
     while(currentNode != NULL) {
-        if(strcmp(psCurrentNode->pcKey, pcKey) == 0) {
-            pcValue = currentNode->pvValue;
+        if(strcmp(currentNode->pcKey, pcKey) == 0) {
+            pcValue = currentNode->pcValue;
 
             if(previousNode == NULL) {
                 oSymTable->firstNode = currentNode->nextNode;
