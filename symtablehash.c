@@ -4,17 +4,25 @@
 #include <assert.h>
 #include "symtable.h" 
 
-
+/* Initial bucket count of the SymTable */
 enum { BUCKET_COUNT = 509 };
 
 struct SymTableBinding {
-    const char *pcKey;
-    void *pvValue;
     struct SymTableBinding *next; 
-}
+    SymTableNode firstSymTableNode; 
+};
+
+struct SymTableNode {
+    char *pcKey;
+    void *pvValue;
+    struct SymTableNode *next;
+};
 
 struct SymTable {
+    /* Initial value of the buckets is set to enumerated constant
+    defined at the top */
     struct Binding *buckets[BUCKET_COUNT];
+    /* Length is the number of bindings in the SymTable */
     size_t length;
 };
 
@@ -29,8 +37,8 @@ SymTable_T SymTable_new(void) {
 void SymTable_free(SymTable_T oSymTable) {
     assert(oSymTable);
     
-    struct SymTableNode *currentNode;
-    struct SymTableNode *nextNode;
+    struct SymTableBinding *currentNode;
+    struct SymTableBinding *nextNode;
     
     currentNode = oSymTable->buckets;
     while (currentNode) {
@@ -50,8 +58,8 @@ size_t SymTable_getLength(SymTable_T oSymTable) {
 /* Need to mod hash function number by bucket count and use that result to find the proper bucket - placed at the end if the key is not already in it */
 int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue) {
     assert(oSymTable);
-    assert(pcKey))
-    struct SymTableNode *currentNode;
+    assert(pcKey);
+    struct SymTableBinding *currentNode;
     currentNode = oSymTable->buckets;
 
     while (currentNode) {
