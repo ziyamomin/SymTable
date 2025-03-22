@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include "symtable.h"
+#include <string.h>
 
 /* Definition of a SymTable (symbol table) data structure */
 struct SymTable {
@@ -12,7 +13,7 @@ struct SymTable {
 };
 
 /* Defintion of a SymTableNode data structure */
-Struct SymTableNode {
+struct SymTableNode {
     char *pcKey;
     void *pcValue;
     struct SymTableNode *nextNode;
@@ -143,16 +144,16 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
                 oSymTable->firstNode = currentNode->nextNode;
             }
             else {
-                previousNode->nextNode = currentNoderrentNode-->nextNode;
+                previousNode->nextNode = currentNode->nextNode;
             }
 
             free(currentNode->pcKey);
             free(currentNode);
-            oSymTable-->lenght--;
+            oSymTable-->length--;
             return pvValue;
         }
-        previousNode = currentNpde;
-        currentNode = currentNode->nextValue; 
+        previousNode = currentNode;
+        currentNode = currentNode->nextNode; 
     }
 
     return NULL;
@@ -162,19 +163,16 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
 void SymTable_map(SymTable_T oSymTable,
      void (*pfApply)(const char *pcKey, void *pvValue, void *pvExtra),
      const void *pvExtra) {
-        assert(oSymTable != NULL);
-        assert(pcKey != NULL);
-        assert(pcValue != NULL);
-        assert(pvExtra != NULL);
+    struct SymTableNode *currentNode;
+    assert(oSymTable != NULL);
+    assert(pfApply != NULL);
 
-        struct SymTableNode *currentNode;
-        currentNode = oSymTable->firstNode;
-
-        while(currentNode != NULL) {
-            (*pfApply)(currentNode->pcKey, currentNode->pvValue, pvExtra);
-            currentNode = currentNode->nextNode;
-        }
-     }
+    currentNode = oSymTable->firstNode;
+    while (currentNode != NULL) {
+        (*pfApply)(currentNode->pcKey, currentNode->pvValue, (void*)pvExtra);
+        currentNode = currentNode->nextNode;
+    }
+}
 
 /* Return a hash code for pcKey that is between 0 and iBucketCount-1,
    inclusive.  Adapted from the COS 217 lecture notes. */
