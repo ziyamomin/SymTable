@@ -138,7 +138,7 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey,
 const void *pvValue) {
     size_t index;
     struct SymTableNode *newNode;
-    SymTableNode *newNode;
+    struct SymTableNode *newNode;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
     if (oSymTable->length >= oSymTable->bucketCount &&
