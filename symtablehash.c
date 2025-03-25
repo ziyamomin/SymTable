@@ -144,7 +144,6 @@ int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
 
 void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
     size_t index = SymTable_hash(pcKey, oSymTable->bucketCount);
-
     struct SymTableNode *current = oSymTable->buckets[index];
 
     assert(oSymTable != NULL);
@@ -225,6 +224,14 @@ SymTable_put detects that the new binding count exceeds 65521, it
 does not increase the bucket count. 65521 is the maximum number of
 buckets that a SymTable object must contain. */
 void SymTable_expand(SymTable_T oSymTable) {
+    size_t newBucketCount = BUCKET_SIZES[++oSymTable->expansionIndex];
+    
+    struct SymTableNode **newBuckets =
+    (struct SymTableNode **)calloc(newBucketCount,
+    sizeof(struct SymTableNode*));
+    size_t i;
+    
+
     assert(oSymTable != NULL);
     
     if (oSymTable->expansionIndex + 1 >=
@@ -232,19 +239,12 @@ void SymTable_expand(SymTable_T oSymTable) {
         return;
     }
     
-    size_t newBucketCount = BUCKET_SIZES[++oSymTable->expansionIndex];
-    
-    struct SymTableNode **newBuckets =
-    (struct SymTableNode **)calloc(newBucketCount,
-    sizeof(struct SymTableNode*));
     
     if (!newBuckets) {
         oSymTable->expansionIndex--;
         return;
     }
     
-    size_t i;
-
     for (i = 0; i < oSymTable->bucketCount; i++) {
         struct SymTableNode *current = oSymTable->buckets[i];
         while (current) {
