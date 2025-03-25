@@ -173,3 +173,38 @@ static size_t SymTable_hash(const char *pcKey, size_t uBucketCount)
 
    return uHash % uBucketCount;
 }
+
+void SymTable_expand(SymTable_T oSymTable) {
+    assert(oSymTable);
+
+    if(oSymTable-> expansionIndex + 1 >= sizeof(BUCKET_SIZES) / sizeof(BUCKET_SIZES[0])) {
+        return;
+    }
+
+    size_t newBucketCount = BUCKET_SIZES(++oSymTable->expansionIndex);
+
+    struct SymTableNode ++newBucketsd = (struct SymTableNode**)calloc(newBucketCount, sizeof(struct SymTableNode*));
+
+    if(newBuckets == NULL) {
+        oSymTable->expansionIndex--;
+        return;
+    }
+
+    size_t i;
+    for(i = 0; i < oSymTable->bucketCount; i++) {
+        struct SymSTable *current = oSymTable->buckets[i];
+        while(current != NULL) {
+            struct symTableNNode *next = current->next;
+
+            size_ newIndex = SymTable_hash(current->pcKey, newBucketCount);
+
+            current->next = newBuckets[newIndex];
+            newBuckets[newBucket] = current;
+
+            current = nextl
+        }
+    }
+    free(oSymTable->buckets);
+    oSymTable->buckets = newBuckets;
+    oSymTable->bucketCount = newBucketCount;
+}
