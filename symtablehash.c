@@ -138,14 +138,19 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey,
 const void *pvValue) {
     size_t index;
     struct SymTableNode *newNode;
+    struct SymTableNode *current;
+
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
+
     if (oSymTable->length >= oSymTable->bucketCount &&
     oSymTable->expansionIndex + 1 < BUCKET_SIZES) {
         SymTable_expand(oSymTable);
     }
+
     index = SymTable_hash(pcKey, oSymTable->bucketCount);
-    struct SymTableNode *current = oSymTable->buckets[index];
+    *current = oSymTable->buckets[index];
+    
     while (current) {
         if (strcmp(current->pcKey, pcKey) == 0) 
         { 
