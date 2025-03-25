@@ -147,7 +147,7 @@ const void *pvValue) {
     assert(pcKey != NULL);
 
     if (oSymTable->length >= oSymTable->bucketCount &&
-    oSymTable->expansionIndex + 1 < BUCKET_SIZES) {
+    oSymTable->expansionIndex + 1 < sizeof(BUCKET_SIZES)/sizeof(BUCKET_SIZES[0])) {
         SymTable_expand(oSymTable);
     }
 
