@@ -136,13 +136,14 @@ size_t SymTable_getLength(SymTable_T oSymTable) {
 
 int SymTable_put(SymTable_T oSymTable, const char *pcKey,
 const void *pvValue) {
+    ize_t index;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
     if (oSymTable->length >= oSymTable->bucketCount &&
     oSymTable->expansionIndex + 1 < BUCKET_SIZES) {
         SymTable_expand(oSymTable);
     }
-    size_t index = SymTable_hash(pcKey, oSymTable->bucketCount);
+    index = SymTable_hash(pcKey, oSymTable->bucketCount);
     struct SymTableNode *current = oSymTable->buckets[index];
     while (current) {
         if (strcmp(current->pcKey, pcKey) == 0) 
@@ -224,6 +225,7 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
     size_t index = SymTable_hash(pcKey, oSymTable->bucketCount);
     struct SymTableNode *current = oSymTable->buckets[index];
     struct SymTableNode *prev = NULL;
+    void *value;
 
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
@@ -235,7 +237,7 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
             } else {
                 oSymTable->buckets[index] = current->next;
             }
-            void *value = current->pvValue;
+            *value = current->pvValue;
             free(current->pcKey);
             free(current);
             oSymTable->length--;
