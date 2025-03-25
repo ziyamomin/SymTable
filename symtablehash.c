@@ -138,7 +138,6 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey,
 const void *pvValue) {
     size_t index;
     struct SymTableNode *newNode;
-    struct SymTableNode *newNode;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
     if (oSymTable->length >= oSymTable->bucketCount &&
@@ -155,7 +154,7 @@ const void *pvValue) {
         current = current->next;
     }
     *newNode =
-    (struct SymTableNode *)malloc(sizeof(struct SymTableNode));
+    struct SymTableNode *)malloc(sizeof(struct SymTableNode));
     if (!newNode) return 0;
     newNode->pcKey = (char *)malloc(strlen(pcKey) + 1);
     if (!newNode->pcKey) {
