@@ -73,7 +73,6 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey,
 const void *pvValue) {
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
-    assert(pvValue != NULL);
 
     if (oSymTable->length >= oSymTable->bucketCount &&
     oSymTable->expansionIndex + 1 < BUCKET_SIZES) {
@@ -105,7 +104,6 @@ void *SymTable_replace(SymTable_T oSymTable, const char *pcKey,
 const void *pvValue) {
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
-    assert(pvValue != NULL);
 
     struct SymTableNode *currentNode;
     size_t index = SymTable_hash(pcKey, oSymTable->bucketCount);
