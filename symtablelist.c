@@ -41,7 +41,7 @@ SymTable_T SymTable_new(void) {
 }
 
 void SymTable_free(SymTable_T oSymTable) {
-    assert(oSymTable); 
+    assert(oSymTable != NULL); 
     struct SymTableNode *currentNode;
     struct SymTableNode *nextNode;
     
@@ -56,15 +56,15 @@ void SymTable_free(SymTable_T oSymTable) {
 }
 
 size_t SymTable_getLength(SymTable_T oSymTable) {
-    assert(oSymTable);
+    assert(oSymTable != NULL);
     return oSymTable->length;
 }
 
 int SymTable_put(SymTable_T oSymTable, const char *pcKey, const
 void *pvValue) {
-    assert(oSymTable);
-    assert(pcKey);
-    assert(pvValue);
+    assert(oSymTable != NULL);
+    assert(pcKey != NULL);
+    assert(pvValue != NULL);
     struct SymTableNode *currentNode;
     currentNode = oSymTable->head;
 
@@ -96,9 +96,9 @@ void *pvValue) {
 
 void *SymTable_replace(SymTable_T oSymTable, const char *pcKey,
 const void *pvValue) {
-    assert(oSymTable);
-    assert(pcKey);
-    assert(pvValue);
+    assert(oSymTable != NULL);
+    assert(pcKey != NULL);
+    assert(pvValue != NULL);
 
     struct SymTableNode *currentNode;
     currentNode = oSymTable->head;
@@ -115,8 +115,8 @@ const void *pvValue) {
 }
 
 int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
-    assert(oSymTable);
-    assert(pcKey);
+    assert(oSymTable != NULL);
+    assert(pcKey != NULL);
     
     struct SymTableNode *currentNode;
     currentNode = oSymTable->head;
@@ -131,8 +131,8 @@ int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
 }
 
 void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
-    assert(oSymTable);
-    assert(pcKey);
+    assert(oSymTable != NULL);
+    assert(pcKey != NULL);
     
     struct SymTableNode *currentNode;
     currentNode = oSymTable->head;
@@ -147,8 +147,8 @@ void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
 }
 
 void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
-    assert(oSymTable);
-    assert(pcKey);
+    assert(oSymTable != NULL);
+    assert(pcKey != NULL);
     
     struct SymTableNode *currentNode;
     struct SymTableNode *prevNode;
@@ -178,9 +178,9 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
 void SymTable_map(SymTable_T oSymTable,
 void (*pfApply)(const char *pcKey, void *pvValue, void *pvExtra),
 const void *pvExtra) {
-    assert(oSymTable);
-    assert(pfApply);
-    assert(pvExtra);
+    assert(oSymTable != NULL);
+    assert(pfApply != NULL);
+    assert(pvExtra != NULL);
     
     struct SymTableNode *currentNode;
     currentNode = oSymTable->head;
