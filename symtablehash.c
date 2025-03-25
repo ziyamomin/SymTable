@@ -16,6 +16,7 @@ powers of two. */
 static const size_t BUCKET_SIZES[] = {509, 1021, 2039, 4093, 8191,
 16381, 32749, 65521};
 
+/* A SymTableNode represents an entry in the symbol table */
 struct SymTableNode {
     /* The pointer to a string in which the key is stored */
     char *pcKey;
@@ -27,10 +28,18 @@ struct SymTableNode {
     struct SymTableNode *next;
 };
 
+
+/* A SymTable consists of key-value pairs and link to the next node
+in a linked list for chaining multiple entires together */
 struct SymTable {
+    /* */
     struct SymTableNode **buckets;
+    /* The number of buckets/groups present in the symbol table. */
     size_t bucketCount;
+    /* The size of the symbol table (the number of nodes/entries in
+    the symbol table) */
     size_t length;
+    /* */
     size_t expansionIndex;
 };
 
