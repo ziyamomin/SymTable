@@ -114,7 +114,7 @@ const void *pvValue) {
     while (currentNode) {
         if (strcmp(currentNode->pcKey, pcKey) == 0) {
             void *oldValue = currentNode->pvValue;
-            currentNode->pvValue = pvValue;
+            currentNode->pvValue = (void *)pvValue;
             return oldValue;
         }
         currentNode = currentNode->next;
