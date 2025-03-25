@@ -74,6 +74,7 @@ const void *pvValue) {
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
     assert(pvValue != NULL);
+
     if (oSymTable->length >= oSymTable->bucketCount &&
     oSymTable->expansionIndex + 1 < BUCKET_SIZES) {
         SymTable_expand(oSymTable);
@@ -104,7 +105,8 @@ void *SymTable_replace(SymTable_T oSymTable, const char *pcKey,
 const void *pvValue) {
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
-    
+    assert(pvValue != NULL);
+
     struct SymTableNode *currentNode;
     size_t index = SymTable_hash(pcKey, oSymTable->bucketCount);
     currentNode = oSymTable->buckets[index];
@@ -171,6 +173,7 @@ void *, void *), const void *pvExtra) {
     assert(oSymTable != NULL);
     assert(pfApply != NULL);
     assert(pvExtra != NULL);
+
     size_t i;
     for (i = 0; i < oSymTable->bucketCount; i++) {
         struct SymTableNode *current = oSymTable->buckets[i];
