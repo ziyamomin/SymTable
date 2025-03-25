@@ -4,8 +4,6 @@
 #define SYMTABLE_INCLUDED
 #include <stddef.h>
 
-typedef struct SymTable *SymTable_T;
-
 /* Returns a new SymTable object that contains no bindings or NULL if
 there is insufficient memory available.*/
 SymTable_T SymTable_new(void);
