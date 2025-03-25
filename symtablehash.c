@@ -13,6 +13,7 @@ struct SymTableNode {
     struct SymTableNode *next;
 };
 
+
 struct SymTable {
     struct SymTableNode **buckets;
     size_t bucketCount;
