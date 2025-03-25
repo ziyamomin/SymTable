@@ -114,7 +114,7 @@ const void *pvValue) {
         }
         currentNode = currentNode->next;
     }
-    return 0;
+    return NULL;
 }
 
 int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
