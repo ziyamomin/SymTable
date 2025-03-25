@@ -149,8 +149,8 @@ const void *pvValue) {
     }
 
     index = SymTable_hash(pcKey, oSymTable->bucketCount);
-    *current = oSymTable->buckets[index];
-    
+    current = oSymTable->buckets[index];
+
     while (current) {
         if (strcmp(current->pcKey, pcKey) == 0) 
         { 
