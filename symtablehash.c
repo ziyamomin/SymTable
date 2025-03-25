@@ -170,6 +170,7 @@ void SymTable_map(SymTable_T oSymTable, void (*pfApply)(const char *,
 void *, void *), const void *pvExtra) {
     assert(oSymTable != NULL);
     assert(pfApply != NULL);
+    assert(pvExtra != NULL);
     size_t i;
     for (i = 0; i < oSymTable->bucketCount; i++) {
         struct SymTableNode *current = oSymTable->buckets[i];
