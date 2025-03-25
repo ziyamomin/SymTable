@@ -80,7 +80,6 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue) {
     return 1;
 }
 
-/* need to modify what's below*/
 void *SymTable_replace(SymTable_T oSymTable, const char *pcKey, const void *pvValue) {
     assert(oSymTable);
     assert(pcKey);
@@ -104,9 +103,7 @@ int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
     assert(pcKey);
     return SymTable_get(oSymTable, pcKey) != NULL;
 }
-/* Hash function is deterministic so a key would map to the same hash 
-each time; again mod the hash by the bucket count to get the bucket,
-iterate through until key is possibly found - runs in linear time */
+
 void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
     assert(oSymTable);
     assert(pcKey);
@@ -157,6 +154,7 @@ void SymTable_map(SymTable_T oSymTable, void (*pfApply)(const char *, void *, vo
             current = current->next;
         }
     }
+}
 
 /* Return a hash code for pcKey that is between 0 and uBucketCount-1,
    inclusive. */
