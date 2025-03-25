@@ -11,7 +11,7 @@
 
 /* Sequence of integers as bucket counts: 509, 1021, 2039, 4093, 8191,
 16381, 32749, and 65521. These integers are primes that are close to
-powers of two.*/
+powers of two. */
 static const size_t BUCKET_SIZES[] = {509, 1021, 2039, 4093, 8191,
 16381, 32749, 65521};
 
@@ -114,7 +114,7 @@ const void *pvValue) {
         }
         currentNode = currentNode->next;
     }
-    return NULL;
+    return 0;
 }
 
 int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
