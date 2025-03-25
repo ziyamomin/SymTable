@@ -174,9 +174,6 @@ void *, void *), const void *pvExtra) {
     }
 }
 
-/* Return a hash code for pcKey that is between 0 and uBucketCount-1,
-   inclusive. */
-
 static size_t SymTable_hash(const char *pcKey, size_t uBucketCount)
 {
    const size_t HASH_MULTIPLIER = 65599;
