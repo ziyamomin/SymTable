@@ -9,14 +9,17 @@
 #include <assert.h>
 #include "symtable.h" 
 
-static const size_t BUCKET_SIZES[] = {509, 1021, 2039, 4093, 8191, 16381, 32749, 65521};
+static const size_t BUCKET_SIZES[] = {509, 1021, 2039, 4093, 8191,
+16381, 32749, 65521};
 
 struct SymTableNode {
     /* The pointer to a string in which the key is stored */
     char *pcKey;
-    /* The pointer to a value associated with the key, which can point to any data type */
+    /* The pointer to a value associated with the key, which can
+    point to any data type */
     void *pvValue;
-    /* The pointer to the next node in the linked list of the symbol table */
+    /* The pointer to the next node in the linked list of the
+    symbol table */
     struct SymTableNode *next;
 };
 
@@ -30,7 +33,9 @@ struct SymTable {
 SymTable_T SymTable_new(void) {
     SymTable_T oSymTable = (SymTable_T)malloc(sizeof(struct SymTable));
     oSymTable->bucketCount = BUCKET_SIZES[0];
-    oSymTable->buckets = (struct SymTableNode **)calloc(oSymTable->bucketCount, sizeof(struct SymTableNode*));
+    oSymTable->buckets =
+    (struct SymTableNode **)calloc(oSymTable->bucketCount,
+    sizeof(struct SymTableNode*));
     if (!oSymTable->buckets) {
         free(oSymTable);
         return NULL;
@@ -61,9 +66,11 @@ size_t SymTable_getLength(SymTable_T oSymTable) {
     return oSymTable->length;
 }
 
-int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue) {
+int SymTable_put(SymTable_T oSymTable, const char *pcKey,
+const void *pvValue) {
     assert(oSymTable && pcKey);
-    if (oSymTable->length >= oSymTable->bucketCount && oSymTable->expansionIndex + 1 < BUCKET_SIZES) {
+    if (oSymTable->length >= oSymTable->bucketCount &&
+    oSymTable->expansionIndex + 1 < BUCKET_SIZES) {
         SymTable_expand(oSymTable);
     }
     size_t index = SymTable_hash(pcKey, oSymTable->bucketCount);
@@ -72,7 +79,8 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue) {
         if (strcmp(current->pcKey, pcKey) == 0) return 0;
         current = current->next;
     }
-    struct SymTableNode *newNode = (struct SymTableNode *)malloc(sizeof(struct SymTableNode));
+    struct SymTableNode *newNode =
+    (struct SymTableNode *)malloc(sizeof(struct SymTableNode));
     if (!newNode) return 0;
     newNode->pcKey = (char *)malloc(strlen(pcKey) + 1);
     if (!newNode->pcKey) {
@@ -87,7 +95,8 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue) {
     return 1;
 }
 
-void *SymTable_replace(SymTable_T oSymTable, const char *pcKey, const void *pvValue) {
+void *SymTable_replace(SymTable_T oSymTable, const char *pcKey,
+const void *pvValue) {
     assert(oSymTable);
     assert(pcKey);
     
@@ -151,7 +160,8 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
 }
 
 
-void SymTable_map(SymTable_T oSymTable, void (*pfApply)(const char *, void *, void *), const void *pvExtra) {
+void SymTable_map(SymTable_T oSymTable, void (*pfApply)(const char *,
+void *, void *), const void *pvExtra) {
     assert(oSymTable);
     assert(pfApply);
     size_t i;
@@ -190,7 +200,9 @@ void SymTable_expand(SymTable_T oSymTable) {
     
     size_t newBucketCount = BUCKET_SIZES[++oSymTable->expansionIndex];
     
-    struct SymTableNode **newBuckets = (struct SymTableNode **)calloc(newBucketCount, sizeof(struct SymTableNode*));
+    struct SymTableNode **newBuckets =
+    (struct SymTableNode **)calloc(newBucketCount,
+    sizeof(struct SymTableNode*));
     
     if (!newBuckets) {
         oSymTable->expansionIndex--;
@@ -204,7 +216,8 @@ void SymTable_expand(SymTable_T oSymTable) {
         while (current) {
             struct SymTableNode *next = current->next;
             
-            size_t newIndex = SymTable_hash(current->pcKey, newBucketCount);
+            size_t newIndex = SymTable_hash(current->pcKey,
+            newBucketCount);
             
             current->next = newBuckets[newIndex];
             newBuckets[newIndex] = current;
