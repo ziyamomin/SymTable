@@ -252,12 +252,13 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
 void SymTable_map(SymTable_T oSymTable, void (*pfApply)(const char *,
 void *, void *), const void *pvExtra) {
     size_t i;
+    struct SymTableNode *current;
 
     assert(oSymTable != NULL);
     assert(pfApply != NULL);
 
     for (i = 0; i < oSymTable->bucketCount; i++) {
-        struct SymTableNode *current = oSymTable->buckets[i];
+        *current = oSymTable->buckets[i];
         while (current) {
             pfApply(current->pcKey, current->pvValue, (void *)pvExtra);
             current = current->next;
