@@ -30,7 +30,7 @@ static void assure(int iSuccessful, int iLineNum)
       printf("Test at line %d failed.\n", iLineNum);
       fflush(stdout);
    }
-}
+} 
 
 /*--------------------------------------------------------------------*/
 
