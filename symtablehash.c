@@ -142,7 +142,7 @@ const void *pvValue) {
     oSymTable->expansionIndex + 1 < BUCKET_SIZES) {
         SymTable_expand(oSymTable);
     }
-    size_t index = SymTable_hash(pcKey, oSymTable->bucketCount);
+    size_t index = (size_t)SymTable_hash(pcKey, oSymTable->bucketCount);
     struct SymTableNode *current = oSymTable->buckets[index];
     while (current) {
         if (strcmp(current->pcKey, pcKey) == 0) 
