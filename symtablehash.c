@@ -196,7 +196,7 @@ void SymTable_expand(SymTable_T oSymTable) {
         while(current != NULL) {
             struct symTableNode *next = current->next;
 
-            size_ newIndex = SymTable_hash(current->pcKey, newBucketCount);
+            size_t newIndex = SymTable_hash(current->pcKey, newBucketCount);
 
             current->next = newBuckets[newIndex];
             newBuckets[newBuckets] = current;
