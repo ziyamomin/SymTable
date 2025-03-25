@@ -63,6 +63,54 @@ static size_t SymTable_hash(const char *pcKey, size_t uBucketCount)
    return uHash % uBucketCount;
 }
 
+/* This function increases oSymTable's bucket count to 1021 when it
+exceeds 509. When the function detects that the new binding count
+exceeds 1021, it increases the bucket count to 2039, etc. When
+SymTable_put detects that the new binding count exceeds 65521, it
+does not increase the bucket count. 65521 is the maximum number of
+buckets that a SymTable object must contain. */
+void SymTable_expand(SymTable_T oSymTable) {
+    size_t newBucketCount = BUCKET_SIZES[++oSymTable->expansionIndex];
+    
+    struct SymTableNode **newBuckets =
+    (struct SymTableNode **)calloc(newBucketCount,
+    sizeof(struct SymTableNode*));
+    size_t i;
+    
+
+    assert(oSymTable != NULL);
+    
+    if (oSymTable->expansionIndex + 1 >=
+    sizeof(BUCKET_SIZES)/sizeof(BUCKET_SIZES[0])) {
+        return;
+    }
+    
+    
+    if (!newBuckets) {
+        oSymTable->expansionIndex--;
+        return;
+    }
+    
+    for (i = 0; i < oSymTable->bucketCount; i++) {
+        struct SymTableNode *current = oSymTable->buckets[i];
+        while (current) {
+            struct SymTableNode *next = current->next;
+            
+            size_t newIndex = SymTable_hash(current->pcKey,
+            newBucketCount);
+            
+            current->next = newBuckets[newIndex];
+            newBuckets[newIndex] = current;
+            
+            current = next;
+        }
+    }
+    
+    free(oSymTable->buckets);
+    oSymTable->buckets = newBuckets;
+    oSymTable->bucketCount = newBucketCount;
+}
+
 void SymTable_free(SymTable_T oSymTable) {
     size_t i;
 
@@ -214,53 +262,4 @@ void *, void *), const void *pvExtra) {
             current = current->next;
         }
     }
-}
-
-
-/* This function increases oSymTable's bucket count to 1021 when it
-exceeds 509. When the function detects that the new binding count
-exceeds 1021, it increases the bucket count to 2039, etc. When
-SymTable_put detects that the new binding count exceeds 65521, it
-does not increase the bucket count. 65521 is the maximum number of
-buckets that a SymTable object must contain. */
-void SymTable_expand(SymTable_T oSymTable) {
-    size_t newBucketCount = BUCKET_SIZES[++oSymTable->expansionIndex];
-    
-    struct SymTableNode **newBuckets =
-    (struct SymTableNode **)calloc(newBucketCount,
-    sizeof(struct SymTableNode*));
-    size_t i;
-    
-
-    assert(oSymTable != NULL);
-    
-    if (oSymTable->expansionIndex + 1 >=
-    sizeof(BUCKET_SIZES)/sizeof(BUCKET_SIZES[0])) {
-        return;
-    }
-    
-    
-    if (!newBuckets) {
-        oSymTable->expansionIndex--;
-        return;
-    }
-    
-    for (i = 0; i < oSymTable->bucketCount; i++) {
-        struct SymTableNode *current = oSymTable->buckets[i];
-        while (current) {
-            struct SymTableNode *next = current->next;
-            
-            size_t newIndex = SymTable_hash(current->pcKey,
-            newBucketCount);
-            
-            current->next = newBuckets[newIndex];
-            newBuckets[newIndex] = current;
-            
-            current = next;
-        }
-    }
-    
-    free(oSymTable->buckets);
-    oSymTable->buckets = newBuckets;
-    oSymTable->bucketCount = newBucketCount;
 }
