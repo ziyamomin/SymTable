@@ -56,7 +56,7 @@ size_t SymTable_getLength(SymTable_T oSymTable) {
 
 int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue) {
     assert(oSymTable && pcKey);
-    if (oSymTable->length >= oSymTable->bucketCount && oSymTable->expansionIndex + 1 < BUCKET_COUNT) {
+    if (oSymTable->length >= oSymTable->bucketCount && oSymTable->expansionIndex + 1 < BUCKET_SIZES) {
         SymTable_expand(oSymTable);
     }
     size_t index = SymTable_hash(pcKey, oSymTable->bucketCount);
