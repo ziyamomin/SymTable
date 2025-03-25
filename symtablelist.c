@@ -45,7 +45,7 @@ size_t SymTable_getLength(SymTable_T oSymTable) {
 
 int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue) {
     assert(oSymTable);
-    assert(pcKey))
+    assert(pcKey);
     struct SymTableNode *currentNode;
     currentNode = oSymTable->head;
 
