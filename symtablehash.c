@@ -176,34 +176,36 @@ static size_t SymTable_hash(const char *pcKey, size_t uBucketCount)
 
 void SymTable_expand(SymTable_T oSymTable) {
     assert(oSymTable);
-
-    if(oSymTable-> expansionIndex + 1 >= sizeof(BUCKET_SIZES) / sizeof(BUCKET_SIZES[0])) {
+    
+    if (oSymTable->expansionIndex + 1 >= sizeof(BUCKET_SIZES) / sizeof(BUCKET_SIZES[0])) {
         return;
     }
-
-    size_t newBucketCount = BUCKET_SIZES(++oSymTable->expansionIndex);
-
-    struct SymTableNode ++newBuckets = (struct SymTableNode**)calloc(newBucketCount, sizeof(struct SymTableNode*));
-
-    if(newBuckets == NULL) {
+    
+    size_t newBucketCount = BUCKET_SIZES[++oSymTable->expansionIndex];
+    
+    struct SymTableNode **newBuckets = (struct SymTableNode **)calloc(newBucketCount, sizeof(struct SymTableNode*));
+    
+    if (!newBuckets) {
         oSymTable->expansionIndex--;
         return;
     }
-
+    
     size_t i;
-    for(i = 0; i < oSymTable->bucketCount; i++) {
-        struct SymTable *current = oSymTable->buckets[i];
-        while(current != NULL) {
-            struct symTableNode *next = current->next;
 
+    for (i = 0; i < oSymTable->bucketCount; i++) {
+        struct SymTableNode *current = oSymTable->buckets[i];
+        while (current) {
+            struct SymTableNode *next = current->next;
+            
             size_t newIndex = SymTable_hash(current->pcKey, newBucketCount);
-
+            
             current->next = newBuckets[newIndex];
-            newBuckets[newBuckets] = current;
-
+            newBuckets[newIndex] = current;
+            
             current = next;
         }
     }
+    
     free(oSymTable->buckets);
     oSymTable->buckets = newBuckets;
     oSymTable->bucketCount = newBucketCount;
