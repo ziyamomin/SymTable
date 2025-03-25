@@ -136,7 +136,7 @@ size_t SymTable_getLength(SymTable_T oSymTable) {
 
 int SymTable_put(SymTable_T oSymTable, const char *pcKey,
 const void *pvValue) {
-    ize_t index;
+    size_t index;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
     if (oSymTable->length >= oSymTable->bucketCount &&
