@@ -263,7 +263,7 @@ void *, void *), const void *pvExtra) {
     assert(pfApply != NULL);
 
     for (i = 0; i < oSymTable->bucketCount; i++) {
-        *current = oSymTable->buckets[i];
+        current = oSymTable->buckets[i];
         while (current) {
             pfApply(current->pcKey, current->pvValue, (void *)pvExtra);
             current = current->next;
