@@ -114,7 +114,6 @@ const void *pvValue) {
 }
 
 int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
-    assert(oSymTable != NULL);
     assert(pcKey != NULL);
     
     struct SymTableNode *currentNode;
