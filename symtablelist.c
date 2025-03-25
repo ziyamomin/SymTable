@@ -1,3 +1,8 @@
+/*--------------------------------------------------------------------*/
+/* symtablelist.c                                                     */
+/* Author: Ziya Momin                                               */
+/*--------------------------------------------------------------------*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -5,13 +10,18 @@
 #include "symtable.h"
 
 struct SymTableNode {
+    /* The pointer to a string in which the key is stored */
     char *pcKey;
+    /* The pointer to a value associated with the key, which can point to any data type */
     void *pvValue;
+    /* The pointer to the next node in the linked list of the symbol table */
     struct SymTableNode *next;
 };
 
 struct SymTable {
+    /* The pointer to the first node (SymTableNode) in the symbol table */
     struct SymTableNode *head;
+    /* The size of the symbol table (the number of nodes/entries in the symbol table) */
     size_t length;
 };
 
@@ -46,6 +56,7 @@ size_t SymTable_getLength(SymTable_T oSymTable) {
 int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue) {
     assert(oSymTable);
     assert(pcKey);
+    assert(pvValue);
     struct SymTableNode *currentNode;
     currentNode = oSymTable->head;
 
@@ -77,7 +88,8 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue) {
 void *SymTable_replace(SymTable_T oSymTable, const char *pcKey, const void *pvValue) {
     assert(oSymTable);
     assert(pcKey);
-    
+    assert(pcValue);
+
     struct SymTableNode *currentNode;
     currentNode = oSymTable->head;
     
@@ -156,6 +168,7 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
 void SymTable_map(SymTable_T oSymTable, void (*pfApply)(const char *pcKey, void *pvValue, void *pvExtra), const void *pvExtra) {
     assert(oSymTable);
     assert(pfApply);
+    assert(pvExtra);
     
     struct SymTableNode *currentNode;
     currentNode = oSymTable->head;

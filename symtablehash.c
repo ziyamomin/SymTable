@@ -1,3 +1,8 @@
+/*--------------------------------------------------------------------*/
+/* symtablehash.c                                                     */
+/* Author: Ziya Momin                                               */
+/*--------------------------------------------------------------------*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -7,11 +12,13 @@
 static const size_t BUCKET_SIZES[] = {509, 1021, 2039, 4093, 8191, 16381, 32749, 65521};
 
 struct SymTableNode {
+    /* The pointer to a string in which the key is stored */
     char *pcKey;
+    /* The pointer to a value associated with the key, which can point to any data type */
     void *pvValue;
+    /* The pointer to the next node in the linked list of the symbol table */
     struct SymTableNode *next;
 };
-
 
 struct SymTable {
     struct SymTableNode **buckets;
