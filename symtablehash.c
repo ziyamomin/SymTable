@@ -35,7 +35,8 @@ SymTable_T SymTable_new(void) {
 
 void SymTable_free(SymTable_T oSymTable) {
     assert(oSymTable);
-    for (size_t i = 0; i < oSymTable->bucketCount; i++) {
+    size_t i;
+    for (i = 0; i < oSymTable->bucketCount; i++) {
         struct SymTableNode *current = oSymTable->buckets[i];
         while (current) {
             struct SymTableNode *next = current->next;
