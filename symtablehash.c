@@ -173,7 +173,9 @@ void *, void *), const void *pvExtra) {
     for (i = 0; i < oSymTable->bucketCount; i++) {
         struct SymTableNode *current = oSymTable->buckets[i];
         while (current) {
-            pfApply(current->pcKey, current->pvValue, (void *)pvExtra);
+            if (current->pvValue != NULL) {
+                pfApply(current->pcKey, current->pvValue, (void *)pvExtra);
+                }
             current = current->next;
         }
     }
