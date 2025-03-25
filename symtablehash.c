@@ -9,6 +9,9 @@
 #include <assert.h>
 #include "symtable.h" 
 
+/* Sequence of integers as bucket counts: 509, 1021, 2039, 4093, 8191,
+16381, 32749, and 65521. These integers are primes that are close to
+powers of two.*/
 static const size_t BUCKET_SIZES[] = {509, 1021, 2039, 4093, 8191,
 16381, 32749, 65521};
 
@@ -188,6 +191,13 @@ static size_t SymTable_hash(const char *pcKey, size_t uBucketCount)
    return uHash % uBucketCount;
 }
 
+
+/* This function increases oSymTable's bucket count to 1021 when it
+exceeds 509. When the function detects that the new binding count
+exceeds 1021, it increases the bucket count to 2039, etc. When
+SymTable_put detects that the new binding count exceeds 65521, it
+does not increase the bucket count. 65521 is the maximum number of
+buckets that a SymTable object must contain. */
 void SymTable_expand(SymTable_T oSymTable) {
     assert(oSymTable);
     
