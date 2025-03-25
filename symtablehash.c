@@ -49,6 +49,20 @@ SymTable_T SymTable_new(void) {
     return oSymTable;
 }
 
+static size_t SymTable_hash(const char *pcKey, size_t uBucketCount)
+{
+   const size_t HASH_MULTIPLIER = 65599;
+   size_t u;
+   size_t uHash = 0;
+
+   assert(pcKey != NULL);
+
+   for (u = 0; pcKey[u] != '\0'; u++)
+      uHash = uHash * HASH_MULTIPLIER + (size_t)pcKey[u];
+
+   return uHash % uBucketCount;
+}
+
 void SymTable_free(SymTable_T oSymTable) {
     size_t i;
 
@@ -200,20 +214,6 @@ void *, void *), const void *pvExtra) {
             current = current->next;
         }
     }
-}
-
-static size_t SymTable_hash(const char *pcKey, size_t uBucketCount)
-{
-   const size_t HASH_MULTIPLIER = 65599;
-   size_t u;
-   size_t uHash = 0;
-
-   assert(pcKey != NULL);
-
-   for (u = 0; pcKey[u] != '\0'; u++)
-      uHash = uHash * HASH_MULTIPLIER + (size_t)pcKey[u];
-
-   return uHash % uBucketCount;
 }
 
 
