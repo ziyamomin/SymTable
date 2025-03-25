@@ -132,13 +132,12 @@ int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
     while (current) {
         if (strcmp(current->pcKey, pcKey) == 0) {
             return 1;
-
         current = current->next;
     }
     
     return 0;
 }
-```
+}
 
 
 void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
