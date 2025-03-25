@@ -180,7 +180,6 @@ void (*pfApply)(const char *pcKey, void *pvValue, void *pvExtra),
 const void *pvExtra) {
     assert(oSymTable != NULL);
     assert(pfApply != NULL);
-    assert(pvExtra != NULL);
     
     struct SymTableNode *currentNode;
     currentNode = oSymTable->head;
