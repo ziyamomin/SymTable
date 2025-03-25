@@ -81,7 +81,9 @@ const void *pvValue) {
     size_t index = SymTable_hash(pcKey, oSymTable->bucketCount);
     struct SymTableNode *current = oSymTable->buckets[index];
     while (current) {
-        if (strcmp(current->pcKey, pcKey) == 0) return 0;
+        if (strcmp(current->pcKey, pcKey) == 0) {
+            return 1;
+        }
         current = current->next;
     }
     struct SymTableNode *newNode =
