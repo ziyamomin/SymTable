@@ -145,6 +145,7 @@ void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
 void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
+
     size_t index = SymTable_hash(pcKey, oSymTable->bucketCount);
     struct SymTableNode *current = oSymTable->buckets[index];
     struct SymTableNode *prev = NULL;
@@ -172,7 +173,6 @@ void SymTable_map(SymTable_T oSymTable, void (*pfApply)(const char *,
 void *, void *), const void *pvExtra) {
     assert(oSymTable != NULL);
     assert(pfApply != NULL);
-    assert(pvExtra != NULL);
 
     size_t i;
     for (i = 0; i < oSymTable->bucketCount; i++) {
