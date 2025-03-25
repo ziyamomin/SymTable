@@ -104,12 +104,12 @@ const void *pvValue) {
 
 void *SymTable_replace(SymTable_T oSymTable, const char *pcKey,
 const void *pvValue) {
-    assert(oSymTable != NULL);
-    assert(pcKey != NULL);
-    
     struct SymTableNode *currentNode;
     size_t index = SymTable_hash(pcKey, oSymTable->bucketCount);
     currentNode = oSymTable->buckets[index];
+
+    assert(oSymTable != NULL);
+    assert(pcKey != NULL);
     
     while (currentNode) {
         if (strcmp(currentNode->pcKey, pcKey) == 0) {
@@ -123,11 +123,11 @@ const void *pvValue) {
 }
 
 int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
-    assert(oSymTable != NULL);
-    assert(pcKey != NULL);
-    
     size_t index = SymTable_hash(pcKey, oSymTable->bucketCount);
     struct SymTableNode *current = oSymTable->buckets[index];
+
+    assert(oSymTable != NULL);
+    assert(pcKey != NULL);
     
     while (current) {
         if (strcmp(current->pcKey, pcKey) == 0) {
@@ -140,9 +140,11 @@ int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
 
 
 void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
+    size_t index = SymTable_hash(pcKey, oSymTable->bucketCount);
+
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
-    size_t index = SymTable_hash(pcKey, oSymTable->bucketCount);
+
     struct SymTableNode *current = oSymTable->buckets[index];
     while (current) {
         if (strcmp(current->pcKey, pcKey) == 0) {
@@ -154,11 +156,13 @@ void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
 }
 
 void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
-    assert(oSymTable != NULL);
-    assert(pcKey != NULL);
     size_t index = SymTable_hash(pcKey, oSymTable->bucketCount);
     struct SymTableNode *current = oSymTable->buckets[index];
     struct SymTableNode *prev = NULL;
+
+    assert(oSymTable != NULL);
+    assert(pcKey != NULL);
+    
     while (current) {
         if (strcmp(current->pcKey, pcKey) == 0) {
             if (prev) {
