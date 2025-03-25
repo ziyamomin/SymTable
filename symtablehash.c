@@ -4,8 +4,7 @@
 #include <assert.h>
 #include "symtable.h" 
 
-/* Initial bucket count of the SymTable */
-enum { BUCKET_COUNT = 509 };
+static const size_t BUCKET_SIZES[] = {509, 1021, 2039, 4093, 8191, 16381, 32749, 65521};
 
 struct SymTableNode {
     char *pcKey;
