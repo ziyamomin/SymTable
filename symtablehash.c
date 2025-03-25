@@ -49,6 +49,9 @@ SymTable_T SymTable_new(void) {
     return oSymTable;
 }
 
+/* Return a hash code for pcKey that is between 0 and uBucketCount-1,
+   inclusive. */
+
 static size_t SymTable_hash(const char *pcKey, size_t uBucketCount)
 {
    const size_t HASH_MULTIPLIER = 65599;
@@ -158,7 +161,7 @@ const void *pvValue) {
         }
         current = current->next;
     }
-    
+
     newNode = (struct SymTableNode *)malloc(sizeof(struct SymTableNode));
 
     if (!newNode) return 0;
