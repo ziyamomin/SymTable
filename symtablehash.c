@@ -225,7 +225,7 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
     size_t index = SymTable_hash(pcKey, oSymTable->bucketCount);
     struct SymTableNode *current = oSymTable->buckets[index];
     struct SymTableNode *prev = NULL;
-    void value;
+    void *value;
 
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
