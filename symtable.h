@@ -37,4 +37,6 @@ void SymTable_map(SymTable_T oSymTable,
      void (*pfApply)(const char *pcKey, void *pvValue, void *pvExtra),
      const void *pvExtra);
 
+static size_t SymTable_hash(const char *pcKey, size_t uBucketCount)
+
 #endif
