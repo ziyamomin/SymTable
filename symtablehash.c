@@ -192,16 +192,16 @@ void SymTable_expand(SymTable_T oSymTable) {
 
     size_t i;
     for(i = 0; i < oSymTable->bucketCount; i++) {
-        struct SymSTable *current = oSymTable->buckets[i];
+        struct SymTable *current = oSymTable->buckets[i];
         while(current != NULL) {
-            struct symTableNNode *next = current->next;
+            struct symTableNode *next = current->next;
 
             size_ newIndex = SymTable_hash(current->pcKey, newBucketCount);
 
             current->next = newBuckets[newIndex];
-            newBuckets[newBucket] = current;
+            newBuckets[newBuckets] = current;
 
-            current = nextl
+            current = next;
         }
     }
     free(oSymTable->buckets);
