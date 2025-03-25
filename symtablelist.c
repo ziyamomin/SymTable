@@ -24,8 +24,7 @@ SymTable_T SymTable_new(void) {
 }
 
 void SymTable_free(SymTable_T oSymTable) {
-    assert(oSymTable);
-    
+    assert(oSymTable); 
     struct SymTableNode *currentNode;
     struct SymTableNode *nextNode;
     
@@ -95,7 +94,7 @@ void *SymTable_replace(SymTable_T oSymTable, const char *pcKey, const void *pvVa
 
 int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
     assert(oSymTable);
-    assert(cKey);
+    assert(pcKey);
     
     struct SymTableNode *currentNode;
     currentNode = oSymTable->head;
@@ -126,7 +125,7 @@ void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
 }
 
 void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
-    assert(oSymTable)
+    assert(oSymTable);
     assert(pcKey);
     
     struct SymTableNode *currentNode;
