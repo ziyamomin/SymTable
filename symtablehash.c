@@ -222,7 +222,8 @@ buckets that a SymTable object must contain. */
 void SymTable_expand(SymTable_T oSymTable) {
     assert(oSymTable != NULL);
     
-    if (oSymTable->expansionIndex + 1 >= sizeof(BUCKET_SIZES) / sizeof(BUCKET_SIZES[0])) {
+    if (oSymTable->expansionIndex + 1 >=
+    sizeof(BUCKET_SIZES)/sizeof(BUCKET_SIZES[0])) {
         return;
     }
     
