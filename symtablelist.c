@@ -98,7 +98,6 @@ void *SymTable_replace(SymTable_T oSymTable, const char *pcKey,
 const void *pvValue) {
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
-    assert(pvValue != NULL);
 
     struct SymTableNode *currentNode;
     currentNode = oSymTable->head;
