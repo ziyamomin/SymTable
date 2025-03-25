@@ -4,6 +4,9 @@
 #define SYMTABLE_INCLUDED
 #include <stddef.h>
 
+/* Defines a new type, SymTable_T, as a pointer to a struct SymTable.
+This represents a symbold table, with SymTable_T
+acting as an alias for a pounter to the structure. */
 typedef struct SymTable *SymTable_T;
 
 /* Returns a new SymTable object that contains no bindings or NULL if
