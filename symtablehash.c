@@ -49,8 +49,10 @@ SymTable_T SymTable_new(void) {
 }
 
 void SymTable_free(SymTable_T oSymTable) {
-    assert(oSymTable != NULL);
     size_t i;
+
+    assert(oSymTable != NULL);
+    
     for (i = 0; i < oSymTable->bucketCount; i++) {
         struct SymTableNode *current = oSymTable->buckets[i];
         while (current) {
@@ -142,10 +144,11 @@ int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
 void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
     size_t index = SymTable_hash(pcKey, oSymTable->bucketCount);
 
+    struct SymTableNode *current = oSymTable->buckets[index];
+
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
-    struct SymTableNode *current = oSymTable->buckets[index];
     while (current) {
         if (strcmp(current->pcKey, pcKey) == 0) {
             return current->pvValue;
@@ -185,10 +188,11 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
 
 void SymTable_map(SymTable_T oSymTable, void (*pfApply)(const char *,
 void *, void *), const void *pvExtra) {
+    size_t i;
+
     assert(oSymTable != NULL);
     assert(pfApply != NULL);
 
-    size_t i;
     for (i = 0; i < oSymTable->bucketCount; i++) {
         struct SymTableNode *current = oSymTable->buckets[i];
         while (current) {
