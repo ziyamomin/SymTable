@@ -49,7 +49,7 @@ SymTable_T SymTable_new(void) {
 }
 
 void SymTable_free(SymTable_T oSymTable) {
-    assert(oSymTable != NULL);
+    assert(oSymTable);
     size_t i;
     for (i = 0; i < oSymTable->bucketCount; i++) {
         struct SymTableNode *current = oSymTable->buckets[i];
@@ -65,15 +65,14 @@ void SymTable_free(SymTable_T oSymTable) {
 }
 
 size_t SymTable_getLength(SymTable_T oSymTable) {
-    assert(oSymTable != NULL);
+    assert(oSymTable);
     return oSymTable->length;
 }
 
 int SymTable_put(SymTable_T oSymTable, const char *pcKey,
 const void *pvValue) {
-    assert(oSymTable != NULL);
-    assert(pcKey != NULL);
-
+    assert(oSymTable);
+    assert(pcKey);
     if (oSymTable->length >= oSymTable->bucketCount &&
     oSymTable->expansionIndex + 1 < BUCKET_SIZES) {
         SymTable_expand(oSymTable);
@@ -81,9 +80,7 @@ const void *pvValue) {
     size_t index = SymTable_hash(pcKey, oSymTable->bucketCount);
     struct SymTableNode *current = oSymTable->buckets[index];
     while (current) {
-        if (strcmp(current->pcKey, pcKey) == 0) {
-            return 1;
-        }
+        if (strcmp(current->pcKey, pcKey) == 0) return 0;
         current = current->next;
     }
     struct SymTableNode *newNode =
@@ -104,9 +101,9 @@ const void *pvValue) {
 
 void *SymTable_replace(SymTable_T oSymTable, const char *pcKey,
 const void *pvValue) {
-    assert(oSymTable != NULL);
-    assert(pcKey != NULL);
-
+    assert(oSymTable);
+    assert(pcKey);
+    
     struct SymTableNode *currentNode;
     size_t index = SymTable_hash(pcKey, oSymTable->bucketCount);
     currentNode = oSymTable->buckets[index];
@@ -123,14 +120,14 @@ const void *pvValue) {
 }
 
 int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
-    assert(oSymTable != NULL);
-    assert(pcKey != NULL);
+    assert(oSymTable);
+    assert(pcKey);
     return SymTable_get(oSymTable, pcKey) != NULL;
 }
 
 void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
-    assert(oSymTable != NULL);
-    assert(pcKey != NULL);
+    assert(oSymTable);
+    assert(pcKey);
     size_t index = SymTable_hash(pcKey, oSymTable->bucketCount);
     struct SymTableNode *current = oSymTable->buckets[index];
     while (current) {
@@ -143,9 +140,8 @@ void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
 }
 
 void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
-    assert(oSymTable != NULL);
-    assert(pcKey != NULL);
-
+    assert(oSymTable);
+    assert(pcKey);
     size_t index = SymTable_hash(pcKey, oSymTable->bucketCount);
     struct SymTableNode *current = oSymTable->buckets[index];
     struct SymTableNode *prev = NULL;
@@ -171,9 +167,8 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
 
 void SymTable_map(SymTable_T oSymTable, void (*pfApply)(const char *,
 void *, void *), const void *pvExtra) {
-    assert(oSymTable != NULL);
-    assert(pfApply != NULL);
-
+    assert(oSymTable);
+    assert(pfApply);
     size_t i;
     for (i = 0; i < oSymTable->bucketCount; i++) {
         struct SymTableNode *current = oSymTable->buckets[i];
@@ -206,7 +201,7 @@ SymTable_put detects that the new binding count exceeds 65521, it
 does not increase the bucket count. 65521 is the maximum number of
 buckets that a SymTable object must contain. */
 void SymTable_expand(SymTable_T oSymTable) {
-    assert(oSymTable != NULL);
+    assert(oSymTable);
     
     if (oSymTable->expansionIndex + 1 >= sizeof(BUCKET_SIZES) / sizeof(BUCKET_SIZES[0])) {
         return;
