@@ -158,7 +158,7 @@ const void *pvValue) {
         }
         current = current->next;
     }
-    *newNode = (SymTableNode *)malloc(sizeof(struct SymTableNode));
+    newNode = (SymTableNode *)malloc(sizeof(struct SymTableNode));
     if (!newNode) return 0;
     newNode->pcKey = (char *)malloc(strlen(pcKey) + 1);
     if (!newNode->pcKey) {
