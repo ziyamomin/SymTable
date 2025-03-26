@@ -251,7 +251,7 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
     
     while (current) {
         if (strcmp(current->pcKey, pcKey) == 0) {
-            value = current->pvValue;  // Assign only if found
+            value = current->pvValue;
 
             if (prev) {
                 prev->next = current->next;
