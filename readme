@@ -61,7 +61,7 @@ What is your assessment of the assignment? Was it helpful? Was it fun?
 will help your grader to grade it in the most favorable light? In
 particular, what bugs are in your submission?
 
-
+No bugs.
 
 ------------------------------------------------------------------------
 What warnings does splint generate on symtablelist.c, and what are your
@@ -86,8 +86,14 @@ symtablelist.c: line 64: medium priority:
    symtablelist.c: line 180: medium priority:
    Do you want to validate 'pvExtra' through an assert?
 
-I disagree with these warnings because....
-
+I disagree with these warnings because the pvValue parameter is never
+dereferenced, meaning there's no need to validate it through an assert.
+Additionally, pvValue can legitimately be NULL. Similarly, pvExtra can
+also be NULL because the function must handle both cases: when an extra
+argument is needed and when no extra argument is required. To
+accomodate this, we reserve a void * argument for pvExtra, using NULL
+as a placeholder when no extra argument is necessary. Therefore, pvExtra 
+will sometimes be NULL by design.
 
 ------------------------------------------------------------------------
 What warnings does splint generate on symtablehash.c, and what are your
@@ -113,7 +119,15 @@ symtablehash.c: line 149: medium priority:
    symtablehash.c: line 274: medium priority:
    Do you want to validate 'pvExtra' through an assert?
 
-I disagree with these warnings because...
+I disagree with these warnings because the pvValue parameter is never
+dereferenced, meaning there's no need to validate it through an assert.
+Additionally, pvValue can legitimately be NULL. Similarly, pvExtra can
+also be NULL because the function must handle both cases: when an extra
+argument is needed and when no extra argument is required. To
+accomodate this, we reserve a void * argument for pvExtra, using NULL
+as a placeholder when no extra argument is necessary. Therefore, pvExtra 
+will sometimes be NULL by design.
+
 
 ------------------------------------------------------------------------
 What are the CPU times reported by testsymtable.c with binding counts
