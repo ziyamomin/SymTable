@@ -286,7 +286,7 @@ void *, void *), const void *pvExtra) {
     for (i = 0; i < oSymTable->bucketCount; i++) {
         current = oSymTable->buckets[i];
         while (current) {
-            (void)pfApply(current->pcKey, current->pvValue, (void *)pvExtra);
+            pfApply(current->pcKey, current->pvValue, (void *)pvExtra);
             current = current->next;
         }
     }
