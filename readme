@@ -106,13 +106,22 @@ disagreements with them? Copy the splint warnings here, and express your
 disagreement after each warning. If there are no warnings, then write
 "None."
 
-symtablehash.c:287:13: Statement has no effect: pfApply(current-...
-  Statement has no visible effect --- no values are modified. (Use -noeffect to
-  inhibit warning)
+symtablehash.c:289:13: Statement has no effect: pfApply(current-...
+  Statement has no visible effect --- no values are modified. (Use
+  -noeffect to inhibit warning)
 
-This line only has no effect when pfApply is NULL; if a non-NULL function
-is passed in as a parameter then the pfApply function will be applied 
-to each binding in the symbol table.
+This warning only applies when pfApply is NULL. If a non-NULL function
+is passed as a parameter, the pfApply function will be applied to
+each key-value binding in the symbol table. The warning is a false
+positive because it does not account for the fact that pfApply could
+be a valid function pointer, which is expected to perform operations
+on each binding. Since we don't know the behavior of pfApply at compile-
+time (as it's provided by the client), we assume it will have the
+desired effect on the daata when called. 
+ 
+If pfApply were NULL, the behavior would not do anything. The warning
+doesn't apply to this scenario unless pfApply is explicitly checked
+for NULL beforehand, which is not the responsibility of SymTable_map.
 
 ------------------------------------------------------------------------
 What warnings does critTer generate on symtablehash.c, and what are your
