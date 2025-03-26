@@ -39,7 +39,6 @@ unauthorized sources of information.
 
 None
 
-
 ------------------------------------------------------------------------
 In fulfillment of the requirement from section 2.4.3 of the Academic
 Regulations in Princeton's Rights, Rules, Responsibilities guide,
@@ -50,11 +49,17 @@ regulations.
 
 Ziya Momin
 
-
 ------------------------------------------------------------------------
 What is your assessment of the assignment? Was it helpful? Was it fun?
 
-
+I thought this assignment was very helpful in getting me comfortable
+with debugging using tools like criTer and valgrind and also building
+with make files to simplify the process of compiling code. This
+assignment really solidified my understanding of utilizing these tools
+to preperly and efficiently debug rather than just "guessing and
+checking" like I may have done in past COS classes.
+Moreover, while tedious, it was actually pretty fun trying to figure out
+where my code went wrong and fixing it iteratively. 
 
 ------------------------------------------------------------------------
 (optional) What information can you provide about your submission that
@@ -103,7 +108,6 @@ disagreement after each warning. If there are no warnings, then write
 
 None.
 
-
 ------------------------------------------------------------------------
 What warnings does critTer generate on symtablehash.c, and what are your
 disagreements with them? Copy the critTer warnings here, and express
@@ -127,7 +131,6 @@ argument is needed and when no extra argument is required. To
 accomodate this, we reserve a void * argument for pvExtra, using NULL
 as a placeholder when no extra argument is necessary. Therefore, pvExtra 
 will sometimes be NULL by design.
-
 
 ------------------------------------------------------------------------
 What are the CPU times reported by testsymtable.c with binding counts
