@@ -154,10 +154,10 @@ const void *pvValue) {
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
-    if (oSymTable->length >= oSymTable->bucketCount &&
+    /* if (oSymTable->length >= oSymTable->bucketCount &&
     oSymTable->expansionIndex + 1 < sizeof(BUCKET_SIZES)/sizeof(BUCKET_SIZES[0])) {
         SymTable_expand(oSymTable);
-    }
+    } */
 
     index = SymTable_hash(pcKey, oSymTable->bucketCount);
     current = oSymTable->buckets[index];
