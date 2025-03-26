@@ -234,7 +234,6 @@ int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
     return 0;
 }
 
-
 void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
     size_t index = SymTable_hash(pcKey, oSymTable->bucketCount);
     struct SymTableNode *current = oSymTable->buckets[index];
@@ -279,8 +278,6 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
     }
     return NULL;
 }
-
-
 
 void SymTable_map(SymTable_T oSymTable, void (*pfApply)(const char *,
 void *, void *), const void *pvExtra) {
