@@ -85,7 +85,8 @@ static void SymTable_expand(SymTable_T oSymTable) {
     size_t newBucketCount = BUCKET_SIZES[++oSymTable->expansionIndex];
     
     struct SymTableNode **newBuckets =
-    (struct SymTableNode **)calloc(newBucketCount, sizeof(struct SymTableNode*));
+    (struct SymTableNode **)calloc(newBucketCount,
+    sizeof(struct SymTableNode*));
     size_t i;
     
 
@@ -155,7 +156,8 @@ const void *pvValue) {
     assert(pcKey != NULL);
 
     if (oSymTable->length >= oSymTable->bucketCount &&
-    oSymTable->expansionIndex + 1 < sizeof(BUCKET_SIZES)/sizeof(BUCKET_SIZES[0])) {
+    oSymTable->expansionIndex + 1 <
+    sizeof(BUCKET_SIZES)/sizeof(BUCKET_SIZES[0])) {
         SymTable_expand(oSymTable);
     }
 
@@ -170,7 +172,8 @@ const void *pvValue) {
         current = current->next;
     }
 
-    newNode = (struct SymTableNode *)malloc(sizeof(struct SymTableNode));
+    newNode =
+    (struct SymTableNode *)malloc(sizeof(struct SymTableNode));
 
     if (!newNode) return 0;
     newNode->pcKey = (char *)malloc(strlen(pcKey) + 1);

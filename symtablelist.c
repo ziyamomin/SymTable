@@ -61,7 +61,8 @@ size_t SymTable_getLength(SymTable_T oSymTable) {
     return oSymTable->length;
 }
 
-int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue) {
+int SymTable_put(SymTable_T oSymTable, const char *pcKey,
+const void *pvValue) {
     struct SymTableNode *currentNode;
     struct SymTableNode *newNode;
     
@@ -94,7 +95,8 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue) {
     return 1;
 }
 
-void *SymTable_replace(SymTable_T oSymTable, const char *pcKey, const void *pvValue) {
+void *SymTable_replace(SymTable_T oSymTable, const char *pcKey,
+const void *pvValue) {
     struct SymTableNode *currentNode;
     void *oldValue;
     
@@ -185,7 +187,8 @@ const void *pvExtra) {
     
     currentNode = oSymTable->head;
     while (currentNode) {
-        pfApply(currentNode->pcKey, currentNode->pvValue, (void *)pvExtra);
+        pfApply(currentNode->pcKey, currentNode->pvValue,
+        (void *)pvExtra);
         currentNode = currentNode->next;
     }
 }
