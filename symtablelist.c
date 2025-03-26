@@ -43,7 +43,8 @@ SymTable_T SymTable_new(void) {
 void SymTable_free(SymTable_T oSymTable) {
     struct SymTableNode *currentNode;
     struct SymTableNode *nextNode;
-    assert(oSymTable != NULL); 
+    
+    assert(oSymTable != NULL);
     
     currentNode = oSymTable->head;
     while (currentNode) {
@@ -60,14 +61,14 @@ size_t SymTable_getLength(SymTable_T oSymTable) {
     return oSymTable->length;
 }
 
-int SymTable_put(SymTable_T oSymTable, const char *pcKey, const
-void *pvValue) {
+int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue) {
+    struct SymTableNode *currentNode;
+    struct SymTableNode *newNode;
+    
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
      
-    struct SymTableNode *currentNode;
     currentNode = oSymTable->head;
-
     while (currentNode) {
         if (strcmp(currentNode->pcKey, pcKey) == 0) {
             return 0;
@@ -75,8 +76,7 @@ void *pvValue) {
         currentNode = currentNode->next;
     }
 
-    struct SymTableNode *newNode =
-    (struct SymTableNode*)malloc(sizeof(struct SymTableNode));
+    newNode = (struct SymTableNode*)malloc(sizeof(struct SymTableNode));
     if (!newNode) return 0;
 
     newNode->pcKey = (char*)malloc(strlen(pcKey) + 1);
@@ -94,17 +94,17 @@ void *pvValue) {
     return 1;
 }
 
-void *SymTable_replace(SymTable_T oSymTable, const char *pcKey,
-const void *pvValue) {
+void *SymTable_replace(SymTable_T oSymTable, const char *pcKey, const void *pvValue) {
+    struct SymTableNode *currentNode;
+    void *oldValue;
+    
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
-    struct SymTableNode *currentNode;
     currentNode = oSymTable->head;
-    
     while (currentNode) {
         if (strcmp(currentNode->pcKey, pcKey) == 0) {
-            void *oldValue = currentNode->pvValue;
+            oldValue = currentNode->pvValue;
             currentNode->pvValue = (void *)pvValue;
             return oldValue;
         }
@@ -114,12 +114,12 @@ const void *pvValue) {
 }
 
 int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
+    struct SymTableNode *currentNode;
+    
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
     
-    struct SymTableNode *currentNode;
     currentNode = oSymTable->head;
-    
     while (currentNode) {
         if (strcmp(currentNode->pcKey, pcKey) == 0) {
             return 1;
@@ -130,12 +130,12 @@ int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
 }
 
 void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
+    struct SymTableNode *currentNode;
+    
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
     
-    struct SymTableNode *currentNode;
     currentNode = oSymTable->head;
-    
     while (currentNode) {
         if (strcmp(currentNode->pcKey, pcKey) == 0) {
             return currentNode->pvValue;
@@ -148,10 +148,10 @@ void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
 void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
     struct SymTableNode *currentNode;
     struct SymTableNode *prevNode;
-
+    void *value;
+    
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
-
     
     currentNode = oSymTable->head;
     prevNode = NULL;
@@ -163,7 +163,7 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
             } else {
                 oSymTable->head = currentNode->next;
             }
-            void *value = currentNode->pvValue;
+            value = currentNode->pvValue;
             free(currentNode->pcKey);
             free(currentNode);
             oSymTable->length--;
@@ -179,14 +179,13 @@ void SymTable_map(SymTable_T oSymTable,
 void (*pfApply)(const char *pcKey, void *pvValue, void *pvExtra),
 const void *pvExtra) {
     struct SymTableNode *currentNode;
-    currentNode = oSymTable->head;
     
     assert(oSymTable != NULL);
     assert(pfApply != NULL);
     
+    currentNode = oSymTable->head;
     while (currentNode) {
-        pfApply(currentNode->pcKey, currentNode->pvValue,
-        (void *)pvExtra);
+        pfApply(currentNode->pcKey, currentNode->pvValue, (void *)pvExtra);
         currentNode = currentNode->next;
     }
 }
