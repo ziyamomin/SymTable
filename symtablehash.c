@@ -85,8 +85,7 @@ static void SymTable_expand(SymTable_T oSymTable) {
     size_t newBucketCount = BUCKET_SIZES[++oSymTable->expansionIndex];
     
     struct SymTableNode **newBuckets =
-    (struct SymTableNode **)calloc(newBucketCount
-    sizeof(struct SymTableNode*));
+    (struct SymTableNode **)calloc(newBucketCount, sizeof(struct SymTableNode*));
     size_t i;
     
 
