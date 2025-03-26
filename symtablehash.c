@@ -244,13 +244,15 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
     size_t index = SymTable_hash(pcKey, oSymTable->bucketCount);
     struct SymTableNode *current = oSymTable->buckets[index];
     struct SymTableNode *prev = NULL;
-    void *value = current->pvValue;
+    void *value = NULL;  // Initialize value to NULL
 
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
     
     while (current) {
         if (strcmp(current->pcKey, pcKey) == 0) {
+            value = current->pvValue;  // Assign only if found
+
             if (prev) {
                 prev->next = current->next;
             } else {
@@ -266,6 +268,7 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
     }
     return NULL;
 }
+
 
 
 void SymTable_map(SymTable_T oSymTable, void (*pfApply)(const char *,
