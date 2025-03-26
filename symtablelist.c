@@ -41,9 +41,9 @@ SymTable_T SymTable_new(void) {
 }
 
 void SymTable_free(SymTable_T oSymTable) {
-    assert(oSymTable != NULL); 
     struct SymTableNode *currentNode;
     struct SymTableNode *nextNode;
+    assert(oSymTable != NULL); 
     
     currentNode = oSymTable->head;
     while (currentNode) {
@@ -146,11 +146,12 @@ void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
 }
 
 void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
-    assert(oSymTable != NULL);
-    assert(pcKey != NULL);
-    
     struct SymTableNode *currentNode;
     struct SymTableNode *prevNode;
+
+    assert(oSymTable != NULL);
+    assert(pcKey != NULL);
+
     
     currentNode = oSymTable->head;
     prevNode = NULL;
@@ -177,11 +178,11 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
 void SymTable_map(SymTable_T oSymTable,
 void (*pfApply)(const char *pcKey, void *pvValue, void *pvExtra),
 const void *pvExtra) {
-    assert(oSymTable != NULL);
-    assert(pfApply != NULL);
-    
     struct SymTableNode *currentNode;
     currentNode = oSymTable->head;
+    
+    assert(oSymTable != NULL);
+    assert(pfApply != NULL);
     
     while (currentNode) {
         pfApply(currentNode->pcKey, currentNode->pvValue,
