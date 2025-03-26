@@ -32,14 +32,21 @@ struct SymTableNode {
 /* A SymTable consists of key-value pairs and link to the next node
 in a linked list for chaining multiple entires together */
 struct SymTable {
-    /* */
+    /* A pointer to an array of buckets (linked lists) that store the
+    key-value pairs in the symbol table. Each bucket corresponds to a
+    hash index and contains a linked list of nodes. Each node in the
+    list stores a key-value pair. */
     struct SymTableNode **buckets;
     /* The number of buckets/groups present in the symbol table. */
     size_t bucketCount;
     /* The size of the symbol table (the number of nodes/entries in
     the symbol table) */
     size_t length;
-    /* */
+    /* An index that keeps track of the current expansion size for the
+    hash table. It indicates which bucket size from the predefined list
+    (e.g., 509, 1021, 2039) should be used when the table needs to
+    grow. The expansion process helps keep the table's performance
+    optimal as it scales. */
     size_t expansionIndex;
 };
 
@@ -60,9 +67,9 @@ SymTable_T SymTable_new(void) {
     oSymTable->expansionIndex = 0;
     return oSymTable;
 }
+
 /* Return a hash code for pcKey that is between 0 and uBucketCount-1,
    inclusive. */
-
 static size_t SymTable_hash(const char *pcKey, size_t uBucketCount)
 {
    const size_t HASH_MULTIPLIER = 65599;
