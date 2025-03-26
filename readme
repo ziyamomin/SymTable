@@ -106,7 +106,13 @@ disagreements with them? Copy the splint warnings here, and express your
 disagreement after each warning. If there are no warnings, then write
 "None."
 
-need to fix warnings
+symtablehash.c:287:13: Statement has no effect: pfApply(current-...
+  Statement has no visible effect --- no values are modified. (Use -noeffect to
+  inhibit warning)
+
+This line only has no effect when pfApply is NULL; if a non-NULL function
+is passed in as a parameter then the pfApply function will be applied 
+to each binding in the symbol table.
 
 ------------------------------------------------------------------------
 What warnings does critTer generate on symtablehash.c, and what are your
