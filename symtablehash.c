@@ -81,11 +81,11 @@ exceeds 1021, it increases the bucket count to 2039, etc. When
 SymTable_put detects that the new binding count exceeds 65521, it
 does not increase the bucket count. 65521 is the maximum number of
 buckets that a SymTable object must contain. */
-void SymTable_expand(SymTable_T oSymTable) {
+static void SymTable_expand(SymTable_T oSymTable) {
     size_t newBucketCount = BUCKET_SIZES[++oSymTable->expansionIndex];
     
     struct SymTableNode **newBuckets =
-    (struct SymTableNode **)calloc(newBucketCount,
+    (struct SymTableNode **)calloc(newBucketCount
     sizeof(struct SymTableNode*));
     size_t i;
     
