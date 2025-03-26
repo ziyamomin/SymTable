@@ -35,7 +35,7 @@ struct SymTable {
     /* */
     struct SymTableNode **buckets;
     /* The number of buckets/groups present in the symbol table. */
-    size_t bucketCount = BUCKET_SIZES[0];
+    size_t bucketCount;
     /* The size of the symbol table (the number of nodes/entries in
     the symbol table) */
     size_t length;
@@ -45,6 +45,7 @@ struct SymTable {
 
 SymTable_T SymTable_new(void) {
     SymTable_T oSymTable = (SymTable_T)malloc(sizeof(struct SymTable));
+    oSymTable->bucketCount = BUCKET_SIZES[0];
     oSymTable->buckets =
     (struct SymTableNode **)calloc(oSymTable->bucketCount,
     sizeof(struct SymTableNode*));
